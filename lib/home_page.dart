@@ -1,22 +1,31 @@
+import 'package:basket_boll_point/cubit/counter_cubit.dart';
+import 'package:basket_boll_point/cubit/counter_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import './cubit/counter_cubit.dart';
 
-class PointCounter extends StatefulWidget {
+class PointCounter extends StatelessWidget {
   const PointCounter({super.key});
-
-
-  @override
-  State<PointCounter> createState() => _PointCounterState();
-
-}
-
-class _PointCounterState extends State<PointCounter> {
- int teamAPoint =0  ;
-int teamBPoint = 0;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return BlocProvider(
+      create: (context) => CounterCubit(),
+      child: const MaterialApp(home: HomePage()),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<CounterCubit, CounterState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
           appBar: AppBar(
             title: const Text(
               "Point Counter",
@@ -29,7 +38,9 @@ int teamBPoint = 0;
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                 const Spacer(flex: 1,),
+                const Spacer(
+                  flex: 1,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -39,8 +50,8 @@ int teamBPoint = 0;
                           "Team A",
                           style: TextStyle(fontSize: 32),
                         ),
-                         Text(
-                          '$teamAPoint',
+                        Text(
+                          '${BlocProvider.of<CounterCubit>(context).teamAPoint}',
                           style: const TextStyle(fontSize: 140),
                         ),
                         ElevatedButton(
@@ -51,10 +62,9 @@ int teamBPoint = 0;
                                 borderRadius: BorderRadius.circular(7.0),
                               ),
                               minimumSize: const Size(140, 50)),
-                          onPressed: (){
-                            setState(() {
-                              teamAPoint+=1;
-                            });
+                          onPressed: () {
+                            BlocProvider.of<CounterCubit>(context)
+                                .teamIcrement(team: 'A', buttonNumber: 1);
                           },
                           child: const Text(
                             'add 1 point',
@@ -72,10 +82,9 @@ int teamBPoint = 0;
                                 borderRadius: BorderRadius.circular(7.0),
                               ),
                               minimumSize: const Size(140, 50)),
-                          onPressed: (){
-                            setState(() {
-                              teamAPoint+=2;
-                            });
+                          onPressed: () {
+                            BlocProvider.of<CounterCubit>(context)
+                                .teamIcrement(team: 'A', buttonNumber: 2);
                           },
                           child: const Text(
                             'add 2 point',
@@ -93,10 +102,9 @@ int teamBPoint = 0;
                                 borderRadius: BorderRadius.circular(7.0),
                               ),
                               minimumSize: const Size(140, 50)),
-                          onPressed: (){
-                            setState(() {
-                              teamAPoint+=3;
-                            });
+                          onPressed: () {
+                            BlocProvider.of<CounterCubit>(context)
+                                .teamIcrement(team: 'A', buttonNumber: 3);
                           },
                           child: const Text(
                             'add 3 point',
@@ -118,8 +126,8 @@ int teamBPoint = 0;
                           "Team B",
                           style: TextStyle(fontSize: 32),
                         ),
-                         Text(
-                          "$teamBPoint",
+                        Text(
+                          "${BlocProvider.of<CounterCubit>(context).teamBPoint}",
                           style: const TextStyle(fontSize: 140),
                         ),
                         ElevatedButton(
@@ -130,10 +138,9 @@ int teamBPoint = 0;
                                 borderRadius: BorderRadius.circular(7.0),
                               ),
                               minimumSize: const Size(140, 50)),
-                          onPressed: (){
-                            setState(() {
-                              teamBPoint+=1;
-                            });
+                          onPressed: () {
+                            BlocProvider.of<CounterCubit>(context)
+                                .teamIcrement(team: 'B', buttonNumber: 1);
                           },
                           child: const Text(
                             'add 1 point',
@@ -151,10 +158,9 @@ int teamBPoint = 0;
                                 borderRadius: BorderRadius.circular(7.0),
                               ),
                               minimumSize: const Size(140, 50)),
-                          onPressed:(){
-                            setState(() {
-                              teamBPoint+=2;
-                            });
+                          onPressed: () {
+                            BlocProvider.of<CounterCubit>(context)
+                                .teamIcrement(team: 'B', buttonNumber: 2);
                           },
                           child: const Text(
                             'add 2 point',
@@ -172,10 +178,9 @@ int teamBPoint = 0;
                                 borderRadius: BorderRadius.circular(7.0),
                               ),
                               minimumSize: const Size(140, 50)),
-                          onPressed: (){
-                            setState(() {
-                              teamBPoint+=3;
-                            });
+                          onPressed: () {
+                            BlocProvider.of<CounterCubit>(context)
+                                .teamIcrement(team: 'B', buttonNumber: 3);
                           },
                           child: const Text(
                             'add 3 point',
@@ -186,11 +191,12 @@ int teamBPoint = 0;
                     ),
                   ],
                 ),
-                const Spacer(flex: 2,),
+                const Spacer(
+                  flex: 2,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange,
@@ -199,26 +205,24 @@ int teamBPoint = 0;
                             borderRadius: BorderRadius.circular(7.0),
                           ),
                           minimumSize: const Size(140, 50)),
-                      onPressed: (){
-                        setState(() {
-                          teamBPoint = 0;
-                          teamAPoint = 0;
-                        });
+                      onPressed: () {
+                        BlocProvider.of<CounterCubit>(context).resetPoint();
                       },
                       child: const Text(
                         'reset',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
-
-
                   ],
                 ),
-                const Spacer(flex: 2,),
+                const Spacer(
+                  flex: 2,
+                ),
               ],
             ),
-          )),
+          ),
+        );
+      },
     );
   }
 }
-
