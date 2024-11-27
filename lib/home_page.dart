@@ -2,7 +2,6 @@ import 'package:basket_boll_point/cubit/counter_cubit.dart';
 import 'package:basket_boll_point/cubit/counter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import './cubit/counter_cubit.dart';
 
 class PointCounter extends StatelessWidget {
   const PointCounter({super.key});
