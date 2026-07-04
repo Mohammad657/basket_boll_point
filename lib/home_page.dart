@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                                 .teamIcrement(team: 'A', buttonNumber: 1);
                           },
                           child: const Text(
-                            'add 1 point',
+                            'add 1s point',
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
