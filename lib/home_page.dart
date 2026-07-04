@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text(
-              "Point Counter",
+              "Point counter",
               textAlign: TextAlign.end,
             ),
             backgroundColor: Colors.orange,
